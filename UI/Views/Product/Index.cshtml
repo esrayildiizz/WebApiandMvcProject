@@ -1,0 +1,71 @@
+﻿@model IEnumerable<UI.Models.ProductModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ürün Sayfası</h2>
+
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductColor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductWeight)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductColor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductWeight)
+            </td>
+            <td>
+                <a href="@Url.Action("Ekle","Product",new {id=item.ProductId})" class="btn btn-success"><i class="glyphicon glyphicon-pencil">EDİT</i></a>
+                <a onclick="Sil(@item.ProductId)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>DELETE</a>
+
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<a href="/Product/Ekle" class="btn btn-info">Yeni Ürün Ekle </a>
+
+@section scripts{
+    <script>
+        //JQuery kütüphanesini kullanacağımız zaman $ kullanılır.
+        $(function () {
+            var successMessage = '@TempData["SuccessMesaage"]';
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        function Sil(id) {
+            alertify.confirm('silme işlemi', 'Kayıtı silmek ister misiniz ? ', function () {
+                window.location.href = '@Url.Action("Sil","Product")/' + id;
+            }, null);
+        }
+    </script>
+}

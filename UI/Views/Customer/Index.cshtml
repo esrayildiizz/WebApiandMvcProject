@@ -1,0 +1,65 @@
+﻿@model IEnumerable<UI.Models.CustomerModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Müşteri Sayfası</h2>
+
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerCity)
+        </th>
+       
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerCity)
+            </td>
+            <td>
+                <a href="@Url.Action("CustomerEkle","Customer",new {id=item.CustomerId})" class="btn btn-success"><i class="glyphicon glyphicon-pencil">EDİT</i></a>
+                <a onclick="Sil(@item.CustomerId)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>DELETE</a>
+
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<a href="/Customer/CustomerEkle" class="btn btn-info">Yeni Müşteri Ekle </a>
+
+@section scripts{
+    <script>
+        //JQuery kütüphanesini kullanacağımız zaman $ kullanılır.
+        $(function () {
+            var successMessage = '@TempData["SuccessMesaage"]';
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        function Sil(id) {
+            alertify.confirm('silme işlemi', 'Kayıtı silmek ister misiniz ? ', function () {
+                window.location.href = '@Url.Action("Sil","Customer")/' + id;
+            }, null);
+        }
+    </script>
+    }

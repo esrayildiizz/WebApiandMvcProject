@@ -1,0 +1,43 @@
+﻿@model UI.Models.CustomerModel
+@{
+    ViewBag.Title = "CustomerEkle";
+}
+
+<h2>Müşteri Düzenleme Sayfası</h2>
+
+<div class="form-body">
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model => model.CustomerId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName)<br />
+        </div>
+        <div class="form-group">
+            @Html.EditorFor(model => model.CustomerName)<br />
+            @Html.ValidationMessageFor(model => model.CustomerName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerCity)<br />
+        </div>
+        <div class="form-group">
+            @Html.EditorFor(model => model.CustomerCity)<br />
+            @Html.ValidationMessageFor(model => model.CustomerCity)
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <input type="submit" value="Kaydet" class="btn btn-success" />
+            <input type="reset" value="Reset" class="btn btn-danger" />
+        </div>
+
+    }
+
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+}
+
+
